@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 const Header = (props) => {
   const activeStyle = { color: "#F15B2A" };
+  const { signinStatus } = props;
 
   return (
     <nav>
@@ -21,7 +22,7 @@ const Header = (props) => {
       </NavLink>
       {" | "}
       <NavLink to="/signin" activeStyle={activeStyle}>
-        {props.logStatus ? 'Sign Out': 'Sign In'}
+        {signinStatus ? 'Sign Out': 'Sign In'}
       </NavLink>
 
     </nav>
@@ -31,14 +32,14 @@ const Header = (props) => {
 
 Header.propType = {
   user: PropTypes.array.isRequired,
-  logStatus: PropTypes.bool.isRequired,
+  signinStatus: PropTypes.bool.isRequired,
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 
   return {
    user: state.user,
-   logStatus: state.user.logStatus
+   signinStatus: state.user.signinStatus
   };
 }
 

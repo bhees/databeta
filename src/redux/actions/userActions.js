@@ -26,3 +26,8 @@ export function authUser(email, password) {
   }
 }
 
+export function signoutUser() {
+  return { type: types.USER_SIGN_OUT }
+}
+
+

@@ -3,9 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
 import Header from "./common/Header";
+import ArticlesPage from "./articles/ArticlesPage";
 import PageNotFound from "./PageNotFound";
 import SigninPage from "./signin/SigninPage";
-import ArticlesPage from "./articles/ArticlesPage";
 import RegisterPage from "./signin/RegisterPage";
 
 function App() {
@@ -23,5 +23,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
