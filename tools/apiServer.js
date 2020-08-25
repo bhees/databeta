@@ -16,13 +16,13 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = '123456789';
 const expiresIn = '1h';
 
-
 const jsonServer = require("json-server");
 const server = jsonServer.create();
 const path = require("path");
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
 const userdb = JSON.parse(fs.readFileSync(path.join(__dirname,'./users.json'), 'UTF-8'));
+
 
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults();
@@ -35,12 +35,13 @@ server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
 server.use(function(req, res, next) {
-  setTimeout(next, 0);
+  setTimeout(next, 2000);
 });
 
 // Declaring custom routes below. Add custom routes before JSON Server router
 
 // Add createdAt to all POSTS
+
 server.use((req, res, next) => {
   if (req.method === "POST") {
     req.body.createdAt = Date.now();
@@ -48,7 +49,6 @@ server.use((req, res, next) => {
   // Continue to JSON Server router
   next();
 });
-
 
 server.post("/articles/", function(req, res, next) {
   const error = validateArticle(req.body);
