@@ -58,17 +58,10 @@ const newArticle = {
   category: ""
 };
 
-const users = [
-  { id: 1, name: "Josh Mitteldorf", email:"", password:"" },
-  { id: 2, name: "Walter Crompton", email:"", password:""  },
-  { id: 3, name: "William Hees", email:"william.hees@gmail.com", password:"123"  },
-  { id: 4, name: "Aleksndar Penchev", email:"alpenchev@yahoo.com", password:"123"  }
-];
 
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
 module.exports = {
   newArticle,
   articles,
-  authors,
-  users
+  authors
 };

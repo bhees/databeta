@@ -16,9 +16,13 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = '123456789';
 const expiresIn = '1h';
 
+const express = require('express');
+const bodyParser = require('body-parser');
 const jsonServer = require("json-server");
-const server = jsonServer.create();
+const server = express();
+//const server = jsonServer.create();
 const path = require("path");
+
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
 const userdb = JSON.parse(fs.readFileSync(path.join(__dirname,'./users.json'), 'UTF-8'));
@@ -27,11 +31,20 @@ const userdb = JSON.parse(fs.readFileSync(path.join(__dirname,'./users.json'), '
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults();
 
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 // Set default middlewares (logger, static, cors and no-cache)
-server.use(middlewares);
+//server.use(middlewares);
+server.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 
 // To handle POST, PUT and PATCH you need to use a body-parser. Using JSON Server's bodyParser
-server.use(jsonServer.bodyParser);
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 
 // Simulate delay on all requests
 server.use(function(req, res, next) {
@@ -50,7 +63,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/articles/", function(req, res, next) {
+server.post("/api/articles/", function(req, res, next) {
   const error = validateArticle(req.body);
   if (error) {
     res.status(400).send(error);
@@ -61,9 +74,8 @@ server.post("/articles/", function(req, res, next) {
 });
 
 // SIGN IN
-server.post('/auth/signin', (req, res) => {
+server.post('/api/auth/signin', (req, res) => {
   const {email, password} = req.body
-
   if (isAuthenticated({email, password}) === -1) {
     const status = 401
     const message = 'Incorrect email or password'
@@ -93,8 +105,8 @@ server.post('/auth/signin', (req, res) => {
 
 
 // Use default router
-server.use(router);
-
+// server.use(router);
+server.use('/api', middlewares, router);
 // Start server
 const port = 3001;
 server.listen(port, () => {
@@ -127,5 +139,6 @@ function verifyToken(token) {
 }
 
 function isAuthenticated({email, password}) {
+  console.log(userdb.users)
   return userdb.users.findIndex(user => user.email === email && user.password === password)
 }
