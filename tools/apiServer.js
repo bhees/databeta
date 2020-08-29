@@ -16,13 +16,9 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = '123456789';
 const expiresIn = '1h';
 
-const express = require('express');
-const bodyParser = require('body-parser');
 const jsonServer = require("json-server");
-const server = express();
-//const server = jsonServer.create();
+const server = jsonServer.create();
 const path = require("path");
-
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
 const userdb = JSON.parse(fs.readFileSync(path.join(__dirname,'./users.json'), 'UTF-8'));
@@ -31,30 +27,21 @@ const userdb = JSON.parse(fs.readFileSync(path.join(__dirname,'./users.json'), '
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults();
 
-server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
-
 // Set default middlewares (logger, static, cors and no-cache)
-//server.use(middlewares);
-server.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+server.use(middlewares);
 
 // To handle POST, PUT and PATCH you need to use a body-parser. Using JSON Server's bodyParser
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
+server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
 server.use(function(req, res, next) {
+  console.log('HITTING APPSERVER -------')
   setTimeout(next, 2000);
 });
 
 // Declaring custom routes below. Add custom routes before JSON Server router
 
 // Add createdAt to all POSTS
-
 server.use((req, res, next) => {
   if (req.method === "POST") {
     req.body.createdAt = Date.now();
@@ -63,7 +50,9 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/api/articles/", function(req, res, next) {
+
+// articles instead of courses
+server.post("/articles/", function(req, res, next) {
   const error = validateArticle(req.body);
   if (error) {
     res.status(400).send(error);
@@ -73,8 +62,9 @@ server.post("/api/articles/", function(req, res, next) {
   }
 });
 
-// SIGN IN
-server.post('/api/auth/signin', (req, res) => {
+
+// SIGN IN - Data-Beta
+server.post('/auth/signin', (req, res) => {
   const {email, password} = req.body
   if (isAuthenticated({email, password}) === -1) {
     const status = 401
@@ -105,8 +95,8 @@ server.post('/api/auth/signin', (req, res) => {
 
 
 // Use default router
-// server.use(router);
-server.use('/api', middlewares, router);
+server.use(router);
+
 // Start server
 const port = 3001;
 server.listen(port, () => {
@@ -123,6 +113,7 @@ function createSlug(value) {
     .toLowerCase();
 }
 
+// Data-Beta Adjusted
 function validateArticle(article) {
   if (!article.title) return "Title is required.";
   if (!article.authorId) return "Author is required.";

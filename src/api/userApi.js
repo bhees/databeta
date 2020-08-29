@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/api/auth/signin/";
+const baseUrl = process.env.API_URL + "/auth/signin/";
 
 
 export function authUser(authObj) {
