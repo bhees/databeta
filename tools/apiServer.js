@@ -35,7 +35,6 @@ server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
 server.use(function(req, res, next) {
-  console.log('HITTING APPSERVER -------')
   setTimeout(next, 2000);
 });
 

@@ -6,7 +6,6 @@ import SigninForm from "./SigninForm";
 
 function SigninPage(props) {
   const { signinStatus } = props;
-  console.log('signinPage', props)
   return <>
       { !signinStatus ?  <SigninForm {...props} /> : <SignoutPage /> }
     </>
