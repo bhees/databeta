@@ -7,6 +7,7 @@ import ArticlesPage from "./articles/ArticlesPage";
 import PageNotFound from "./PageNotFound";
 import SigninPage from "./signin/SigninPage";
 import RegisterPage from "./signin/RegisterPage";
+import ContactPage from "./contact/ContactPage";
 import { ToastContainer } from "react-toastify"
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/articles" component={ArticlesPage} />
         <Route path="/signin" component={SigninPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/contact" component={ContactPage} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} hideProgressBar />

@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpackBundleAnalyzer = require("webpack-bundle-analyzer");
 
 process.env.NODE_ENV = "production";
+// const prod_api_ip = "http://3.131.93.93:3001";
+const prod_api_ip = "http://localhost:3001";
 
 module.exports = {
   mode: "production",
@@ -27,7 +29,7 @@ module.exports = {
     new webpack.DefinePlugin({
       // This global makes sure React is built in prod mode.
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.API_URL": JSON.stringify("http://localhost:3001")
+      "process.env.API_URL": JSON.stringify(prod_api_ip)
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
@@ -72,6 +74,12 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: {
+          loader: 'url-loader',
+        }
       }
     ]
   }

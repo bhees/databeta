@@ -1,4 +1,5 @@
 import React from "react";
+import imgHorvathClock  from '../../assets/images/Horvath-clock-progression.png';
 
 const AboutPage = () => (
   <div>
@@ -20,7 +21,11 @@ const AboutPage = () => (
     <p>
       Synergy is when two different supplements combine to produce a bigger benefit than the sum of their separate effects. Synergy is what we’re looking for. The Data-BETA program is designed to find the rare combinations that work together to produce a big anti-aging benefit.
     </p>
-
+    <figcaption className = 'centerPositionLink'><a href="https://youtu.be/4VTHsQcqxkA">3-minute Introduction to DataBeta research study video</a>
+    </figcaption>
+    <figure>
+      <img className='imgClock' src={imgHorvathClock}/>
+    </figure>
   </div>
 );
 

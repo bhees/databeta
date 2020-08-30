@@ -61,6 +61,18 @@ server.post("/articles/", function(req, res, next) {
   }
 });
 
+// articles instead of courses
+server.post("/contactform/", function(req, res, next) {
+  const error = validateContactForm(req.body);
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    // req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
+    const contactFormResponse = { saved: true };
+    res.status(200).send(contactFormResponse);
+  }
+});
+
 
 // SIGN IN - Data-Beta
 server.post('/auth/signin', (req, res) => {
@@ -117,6 +129,15 @@ function validateArticle(article) {
   if (!article.title) return "Title is required.";
   if (!article.authorId) return "Author is required.";
   if (!article.category) return "Category is required.";
+  return "";
+}
+
+function validateContactForm(contactForm) {
+  if (!contactForm.firstName) return "First Name is required.";
+  if (!contactForm.lastName) return "Last Name is required.";
+  if (!contactForm.email) return "Email is required.";
+  if (!contactForm.phone) return "Phone is required.";
+  if (!contactForm.comment) return "Comment is required.";
   return "";
 }
 

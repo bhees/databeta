@@ -21,10 +21,21 @@ const Header = (props) => {
         Scientific Articles
       </NavLink>
       {" | "}
+      <a href='https://joshmitteldorf.scienceblog.com/' activeStyle={activeStyle}>
+        Aging Matters Blog
+      </a>
+      {" | "}
+      <a href= 'http://MyDNAge.com' activeStyle={activeStyle}>
+        Zymo MyDNAge clock
+      </a>
+      {" | "}
       <NavLink to="/signin" activeStyle={activeStyle}>
         {signinStatus ? 'Sign Out': 'Sign In'}
       </NavLink>
-
+      {" | "}
+      <NavLink to="/contact" activeStyle={activeStyle}>
+        Contact
+      </NavLink>
     </nav>
   );
 };
